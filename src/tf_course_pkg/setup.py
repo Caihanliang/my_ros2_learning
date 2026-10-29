@@ -24,6 +24,9 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'static_target_broadcaster = tf_course_pkg.static_target_broadcaster:main',
+            'dynamic_robot_broadcaster = tf_course_pkg.dynamic_robot_broadcaster:main',
+            'target_listener = tf_course_pkg.target_listener:main',
         ],
     },
 )
