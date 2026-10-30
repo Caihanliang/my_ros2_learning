@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+  阶段 03：用纯 URDF 完成整车外观和 link/joint 树。
+-->
+<robot name="complete_visual_robot">
+  <material name="course_blue">
+    <color rgba="0.12 0.35 0.90 1.0"/>
+  </material>
+  <material name="wheel_black">
+    <color rgba="0.03 0.03 0.03 1.0"/>
+  </material>
+  <material name="caster_gray">
+    <color rgba="0.55 0.55 0.55 1.0"/>
+  </material>
+  <material name="sensor_dark">
+    <color rgba="0.10 0.10 0.10 1.0"/>
+  </material>
+  <material name="support_gray">
+    <color rgba="0.35 0.35 0.38 1.0"/>
+  </material>
+  <material name="marker_yellow">
+    <color rgba="0.95 0.75 0.10 1.0"/>
+  </material>
+
+  <link name="base_footprint"/>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.55 0.38 0.16"/>
+      </geometry>
+      <material name="course_blue"/>
+    </visual>
+  </link>
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.16" rpy="0 0 0"/>
+  </joint>
+
+  <link name="left_wheel_link">
+    <visual>
+      <!-- cylinder 默认沿 Z 轴，需要绕 X 轴旋转 90 度。 -->
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.10" length="0.06"/>
+      </geometry>
+      <material name="wheel_black"/>
+    </visual>
+    <!-- 黄色标记让车轮旋转在 RViz 中更容易观察。 -->
+    <visual name="rotation_marker">
+      <origin xyz="0.10 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.07 0.025"/>
+      </geometry>
+      <material name="marker_yellow"/>
+    </visual>
+  </link>
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0.08 0.22 -0.06" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.10" length="0.06"/>
+      </geometry>
+      <material name="wheel_black"/>
+    </visual>
+    <visual name="rotation_marker">
+      <origin xyz="0.10 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.07 0.025"/>
+      </geometry>
+      <material name="marker_yellow"/>
+    </visual>
+  </link>
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0.08 -0.22 -0.06" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="caster_link">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="caster_gray"/>
+    </visual>
+  </link>
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_link"/>
+    <origin xyz="-0.24 0 -0.11" rpy="0 0 0"/>
+  </joint>
+
+  <link name="lidar_support_link">
+    <visual>
+      <geometry><cylinder radius="0.025" length="0.08"/></geometry>
+      <material name="support_gray"/>
+    </visual>
+  </link>
+  <joint name="lidar_support_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_support_link"/>
+    <origin xyz="0.16 0 0.12" rpy="0 0 0"/>
+  </joint>
+
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.065" length="0.055"/>
+      </geometry>
+      <material name="sensor_dark"/>
+    </visual>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="lidar_support_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+  </joint>
+</robot>

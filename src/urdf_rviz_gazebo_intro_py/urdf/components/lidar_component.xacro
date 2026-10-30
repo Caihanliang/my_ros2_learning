@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="lidar_x" value="0.16"/>
+  <xacro:property name="lidar_support_radius" value="0.025"/>
+  <xacro:property name="lidar_support_length" value="0.08"/>
+  <xacro:property name="lidar_support_z" value="0.12"/>
+  <xacro:property name="lidar_z_from_support" value="0.06"/>
+  <xacro:property name="lidar_radius" value="0.065"/>
+  <xacro:property name="lidar_height" value="0.055"/>
+
+  <xacro:macro name="lidar_component" params="with_physics">
+    <link name="lidar_support_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${lidar_support_radius}" length="${lidar_support_length}"/>
+        </geometry>
+        <material name="lidar_support_gray">
+          <color rgba="0.35 0.35 0.38 1.0"/>
+        </material>
+      </visual>
+      <xacro:if value="${with_physics}">
+        <collision>
+          <geometry>
+            <cylinder radius="${lidar_support_radius}" length="${lidar_support_length}"/>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="0.10"/>
+          <inertia ixx="0.000069" ixy="0.0" ixz="0.0"
+                   iyy="0.000069" iyz="0.0" izz="0.000031"/>
+        </inertial>
+      </xacro:if>
+    </link>
+    <joint name="lidar_support_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="lidar_support_link"/>
+      <origin xyz="${lidar_x} 0 ${lidar_support_z}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="lidar_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${lidar_radius}" length="${lidar_height}"/>
+        </geometry>
+        <material name="lidar_dark">
+          <color rgba="0.10 0.10 0.10 1.0"/>
+        </material>
+      </visual>
+      <xacro:if value="${with_physics}">
+        <collision>
+          <geometry>
+            <cylinder radius="${lidar_radius}" length="${lidar_height}"/>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="0.20"/>
+          <inertia ixx="0.000262" ixy="0.0" ixz="0.0"
+                   iyy="0.000262" iyz="0.0" izz="0.000423"/>
+        </inertial>
+      </xacro:if>
+    </link>
+    <joint name="lidar_joint" type="fixed">
+      <parent link="lidar_support_link"/>
+      <child link="lidar_link"/>
+      <origin xyz="0 0 ${lidar_z_from_support}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+</robot>

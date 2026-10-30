@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot name="physics_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="components/base_footprint_component.xacro"/>
+  <xacro:include filename="components/base_component.xacro"/>
+  <xacro:include filename="components/wheel_component.xacro"/>
+  <xacro:include filename="components/caster_component.xacro"/>
+  <xacro:include filename="components/lidar_component.xacro"/>
+
+<xacro:include filename="components/gazebo_extensions.xacro"/>
+
+  <xacro:base_footprint_component/>
+  <xacro:base_component with_physics="true"/>
+  <xacro:wheel_component side="left" y_position="0.22" with_physics="true"/>
+  <xacro:wheel_component side="right" y_position="-0.22" with_physics="true"/>
+  <xacro:caster_component with_physics="true"/>
+  <xacro:lidar_component with_physics="true"/>
+</robot>

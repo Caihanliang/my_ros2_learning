@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="base_footprint_component" params="">
+    <!-- 辅助坐标 link 没有尺寸、颜色和物理属性。 -->
+    <link name="base_footprint"/>
+  </xacro:macro>
+</robot>
